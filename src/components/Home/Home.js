@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { fetchPopular } from 'components/helpres/popular';
-import MovieList from 'components/MovieList/MovieList';
+import MovieList from 'components/MovieSearch/MovieList';
 
 export default function Home() {
   const [films, setFilms] = useState([]);

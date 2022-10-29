@@ -12,7 +12,6 @@ export const fetchReviews = async filmId => {
       },
     })
     .then(result => {
-      console.log(result.data.results);
       return result.data.results;
     })
     .catch(err => {

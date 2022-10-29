@@ -6,6 +6,7 @@ import {
   NavLink,
   Outlet,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { fetchFilmDetails } from 'components/helpres/details';
 
@@ -24,7 +25,7 @@ export default function MovieDetails() {
     };
 
     filmDetails();
-  }, []);
+  });
 
   const onBack = () => {
     navigate(prevPath);
@@ -78,3 +79,9 @@ export default function MovieDetails() {
     </div>
   );
 }
+
+MovieDetails.propType = {
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
+};

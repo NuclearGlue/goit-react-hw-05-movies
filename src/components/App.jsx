@@ -12,7 +12,7 @@ const Home = lazy(() =>
   import('./Home/Home' /* webpackChunkName: "home-page" */)
 );
 const SearchFilm = lazy(() =>
-  import('./MovieList/SearchFilm' /* webpackChunkName: "movies-page" */)
+  import('./MovieSearch/SearchFilm' /* webpackChunkName: "movies-page" */)
 );
 const MovieDetails = lazy(() =>
   import(
@@ -37,7 +37,7 @@ export const App = () => {
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/movies' element={<SearchFilm />} />
-        <Route path="/movies/:id/*" element={<MovieDetails />} >
+        <Route path="/movies/:id" element={<MovieDetails />} >
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
        </Route>

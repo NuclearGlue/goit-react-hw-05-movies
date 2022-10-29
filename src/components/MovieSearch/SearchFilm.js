@@ -1,11 +1,10 @@
 import { fetchFilms } from 'components/helpres/request';
 import { useState } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import MovieList from './MovieList';
 
 export default function SearchFilm() {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams({});
 
   const [films, setFilms] = useState([]);
   const [search, setSearch] = useState('');
@@ -22,7 +21,6 @@ export default function SearchFilm() {
 
   const handleChange = event => {
     setSearch(event.currentTarget.value);
-    setSearchParams({ search: event.target.value });
   };
 
   return (

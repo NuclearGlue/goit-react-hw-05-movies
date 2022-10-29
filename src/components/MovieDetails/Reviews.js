@@ -2,7 +2,7 @@ import { fetchReviews } from 'components/helpres/reviewsRequest';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function Reviews({}) {
+export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
 
@@ -13,7 +13,7 @@ export default function Reviews({}) {
     };
 
     filmReviews();
-  }, []);
+  });
 
   return (
     <ul>
