@@ -1,32 +1,41 @@
+import { useState, useEffect } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { fetchFilms } from 'components/helpres/request';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import MovieList from './MovieList';
+import Searchbar from './Searchbar';
 
 export default function SearchFilm() {
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  let queueName = searchParams.get('queue') ?? '';
 
   const [films, setFilms] = useState([]);
-  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (queueName !== '') {
+      getFilms();
+    }
+  }, []);
+
+  const getFilms = async () => {
+    const result = await fetchFilms(queueName);
+    setFilms(result);
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
-    const getFilms = async () => {
-      const result = await fetchFilms(search);
-      setFilms(result);
-    };
-
     getFilms();
   };
 
-  const handleChange = event => {
-    setSearch(event.currentTarget.value);
+  const updateQueryString = queue => {
+    const nextParams = queue !== '' ? { queue } : {};
+    setSearchParams(nextParams);
   };
 
   return (
     <>
       <form className="Search_Form" onSubmit={handleSubmit}>
-        <input type="text" value={search} onChange={handleChange} />
+        <Searchbar value={queueName} onChange={updateQueryString} />
         <button type="submit" className="SearchForm-button">
           <span className="SearchForm-button-label">Search</span>
         </button>
