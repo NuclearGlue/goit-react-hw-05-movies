@@ -15,7 +15,7 @@ export default function SearchFilm() {
     if (queueName !== '') {
       getFilms();
     }
-  }, []);
+  });
 
   const getFilms = async () => {
     const result = await fetchFilms(queueName);
