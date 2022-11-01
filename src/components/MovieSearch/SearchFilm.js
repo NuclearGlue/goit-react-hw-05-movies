@@ -7,39 +7,43 @@ import Searchbar from './Searchbar';
 export default function SearchFilm() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  let queueName = searchParams.get('queue') ?? '';
+  let queueName = searchParams.get('search') ?? '';
 
   const [films, setFilms] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (queueName !== '') {
-      getFilms();
+    if (queueName) {
+      getFilms(queueName);
+      setSearch(queueName);
     }
-  });
+    return;
+  }, [queueName]);
 
-  const getFilms = async () => {
-    const result = await fetchFilms(queueName);
+  const getFilms = async searchQueue => {
+    const result = await fetchFilms(searchQueue);
     setFilms(result);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    getFilms();
+    getFilms(search);
+    setSearchParams({ search });
   };
 
   const updateQueryString = queue => {
-    const nextParams = queue !== '' ? { queue } : {};
-    setSearchParams(nextParams);
+    setSearch(queue);
   };
 
   return (
     <>
       <form className="Search_Form" onSubmit={handleSubmit}>
-        <Searchbar value={queueName} onChange={updateQueryString} />
+        <Searchbar value={search || ''} onChange={updateQueryString} />
         <button type="submit" className="SearchForm-button">
           <span className="SearchForm-button-label">Search</span>
         </button>
       </form>
+
       <MovieList films={films} state={{ from: location }} />
     </>
   );
